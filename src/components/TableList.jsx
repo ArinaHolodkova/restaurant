@@ -1,27 +1,48 @@
 import React, { useState } from "react";
 import { tables, menu } from "../Data";
 
-
 const TableList = () => {
   const [tableData, setTableData] = useState(tables);
   const [selectedTable, setSelectedTable] = useState(null);
   const [viewingOrder, setViewingOrder] = useState(false);
+  const [swapMode, setSwapMode] = useState(false);
+  const [swapFromTable, setSwapFromTable] = useState(null);
 
   const updateTable = (id, updates) => {
     setTableData(prevTables => prevTables.map(table => table.id === id ? { ...table, ...updates } : table));
   };
 
+  const handleSwapRequest = (table) => {
+    if (!swapFromTable) {
+      setSwapFromTable(table);
+    } else {
+      // Swap table data
+      const updatedTables = tableData.map(t => {
+        if (t.id === swapFromTable.id) return { ...t, id: table.id };
+        if (t.id === table.id) return { ...t, id: swapFromTable.id };
+        return t;
+      });
+      setTableData(updatedTables);
+      setSwapFromTable(null);
+      setSwapMode(false);
+    }
+  };
+
   return (
     <div>
       <h2>Restaurant Tables</h2>
+      <button onClick={() => setSwapMode(!swapMode)}>
+        {swapMode ? "Cancel Swap" : "Swap Tables"}
+      </button>
       <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
         {tableData.map(table => (
-          <button key={table.id} onClick={() => { setSelectedTable(table); setViewingOrder(false); }}>
+          <button key={table.id} 
+            onClick={() => swapMode ? handleSwapRequest(table) : setSelectedTable(table)}>
             Table {table.id} - {table.status}
           </button>
         ))}
       </div>
-      {selectedTable && (
+      {selectedTable && !swapMode && (
         <div>
           <h3>Table {selectedTable.id}</h3>
           <button onClick={() => setViewingOrder(true)}>View Current Order</button>
@@ -52,7 +73,7 @@ const OrderManagement = ({ table, updateTable, setSelectedTable }) => {
 
   const saveChanges = () => {
     updateTable(table.id, { orders: order, allergies, totalBill, status });
-    setSelectedTable(null); // Close table view after saving
+    setSelectedTable(null);
   };
 
   return (

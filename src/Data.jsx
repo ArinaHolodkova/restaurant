@@ -21,7 +21,7 @@ export const menu = [
   { id: 20, name: "Lamb Chops", price: 28 }
 ];
 
-export const tables = Array.from({ length: 10 }, (_, i) => ({
+export const tables = Array.from({ length: 20 }, (_, i) => ({
   id: i + 1,
   orders: [],
   allergies: "",
