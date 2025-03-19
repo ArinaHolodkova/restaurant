@@ -34,9 +34,9 @@ const TableList = () => {
       <button onClick={() => setSwapMode(!swapMode)}>
         {swapMode ? "Cancel Swap" : "Swap Tables"}
       </button>
-      <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+      <div className="table__container">
         {tableData.map(table => (
-          <button key={table.id} 
+          <button  key={table.id} className={`table ${table.status.toLowerCase()}`} 
             onClick={() => swapMode ? handleSwapRequest(table) : setSelectedTable(table)}>
             Table {table.id} - {table.status}
           </button>

@@ -1,12 +1,11 @@
 :root {
- font-family: "DM Sans", serif;
+  font-family: "DM Sans", serif;
   line-height: 1.5;
   font-weight: 400;
 
   color-scheme: light dark;
-  color:black;
-  background-color: #eae2e4;
-  
+  color: black;
+  --background-color: #eae2e4;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -32,64 +31,49 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  
+  background-color: var(--background-color);
 }
 
 h1 {
   font-family: "Cormorant", serif;
 }
-h2{
+h2 {
   font-family: "Oooh Baby", serif;
-   font-size: 3rem;
-   font-weight: 800;
-  
+  font-size: 3rem;
+  font-weight: 800;
 }
 
-.tables-container {
+.table__container {
   display: flex;
-  flex-wrap: wrap; 
-  gap: 3rem;
-  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 1rem;
+  justify-content: space-around;
 }
 
 .table {
-  width: 10rem; 
-  height: 10rem; 
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border-radius: 10px; 
-  text-align: center;
-  font-weight: bold;
-  cursor: pointer; 
-  transition: transform 0.2s ease-in-out, background 0.3s;
+  height: 10rem;
+  width: 10rem;
+  background-color: var(--background-color);
+  border: 5px solid var(--color-blue);
+  border-radius: 10%;
+  color: black;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.table.taken {
+  background-color: var(--color-lblue);
+  border: none;
+}
+
+.table.reserved {
+  background-color: var(--color-blue);
+  color: white;
+  border: none;
 }
 
 .table:hover {
-  transform: scale(1.05); 
-}
-
-.occupied {
-  background-color: var(--color-blue);
-  color: var(--color-beige);
-}
-
-.free {
-  border: solid 5px var(--color-blue);
-  color: black;
-}
-
-.reserved {
-  background-color: var(--color-lblue);
-  color: black;
-}
-
-.table-details {
-  display: none; 
-
-}
-
-.table.expanded .table-details {
-  display: block; 
+  transform: scale(1.05);
 }
