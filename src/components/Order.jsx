@@ -27,7 +27,6 @@ const OrderManagement = ({ table, updateTable, setSelectedTable }) => {
       <label>Status:
         <select value={status} onChange={e => setStatus(e.target.value)}>
           <option>Available</option>
-          <option>Reserved</option>
           <option>Taken</option>
         </select>
       </label>

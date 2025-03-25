@@ -28,3 +28,20 @@ export const tables = Array.from({ length: 20 }, (_, i) => ({
   totalBill: 0,
   status: "Available" 
 }));
+
+export const allergies = [
+  "Gluten",
+  "Peanuts",
+  "Tree Nuts",
+  "Milk / Dairy",
+  "Eggs",
+  "Fish",
+  "Shellfish",
+  "Soy",
+  "Wheat",
+  "Sesame",
+  "Lupin",
+  "Mustard",
+  "Celery",
+  "Sulphites"
+];

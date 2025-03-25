@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { tables } from "../Data";
 import CurrentOrder from "./CurrentOrder";
-import OrderManagement from "./Order";
+import Order from "./Order";
+import Reservation from "./Reservation";
 
 const TableList = () => {
   const [tableData, setTableData] = useState(tables);
@@ -54,13 +55,20 @@ const TableList = () => {
       {selectedTable && !swapMode && (
         <div>
           <h3>Table {selectedTable.id}</h3>
-          <button onClick={() => setViewingOrder(true)}>View Current Order</button>
-          <button onClick={() => setViewingOrder(false)}>Place Order</button>
+          <button onClick={() => setViewingOrder("current")}>View Current Order</button>
+          <button onClick={() => setViewingOrder("place")}>Place Order</button>
+          <button onClick={() => setViewingOrder("reserve")}>Reserve</button>
 
-          {viewingOrder ? (
-            <CurrentOrder table={selectedTable} />
-          ) : (
-            <OrderManagement
+          {viewingOrder === "current" && <CurrentOrder table={selectedTable} />}
+          {viewingOrder === "place" && (
+            <Order
+              table={selectedTable}
+              updateTable={updateTable}
+              setSelectedTable={setSelectedTable}
+            />
+          )}
+          {viewingOrder === "reserve" && (
+            <Reservation
               table={selectedTable}
               updateTable={updateTable}
               setSelectedTable={setSelectedTable}
