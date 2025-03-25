@@ -5,6 +5,7 @@ import Order from "./Order";
 import Reservation from "./Reservation";
 import Bingo from "./bingo";
 import Filter from "./Filter";
+import { useEffect } from "react";
 
 const TableList = () => {
   const [tableData, setTableData] = useState(tables);
@@ -14,13 +15,21 @@ const TableList = () => {
   const [swapFromTable, setSwapFromTable] = useState(null);
   const [currentFilter, setCurrentFilter] = useState("All");
 
-  const updateTable = (id, updates) => {
-    setTableData(prevTables =>
-      prevTables.map(table =>
-        table.id === id ? { ...table, ...updates } : table
-      )
-    );
-  };
+const updateTable = (id, updates) => {
+  const updatedTables = tableData.map(table =>
+    table.id === id ? { ...table, ...updates } : table
+  );
+
+  setTableData(updatedTables);
+  localStorage.setItem("tableData", JSON.stringify(updatedTables));
+}
+
+useEffect(() => {
+  const saved = localStorage.getItem("tableData");
+  if (saved) {
+    setTableData(JSON.parse(saved));
+  }
+}, []);
 
   const cancelReservation = (id) => {
     const table = tableData.find(t => t.id === id);
@@ -79,10 +88,12 @@ const TableList = () => {
             }}
           >
             <button
-              className={`table ${table.status.toLowerCase()}`}
-              onClick={() =>
-                swapMode ? handleSwapRequest(table) : setSelectedTable(table)
-              }
+            className={`table ${table.status.toLowerCase()}`}
+            onClick={() =>
+            swapMode
+              ? handleSwapRequest(table)
+              : setSelectedTable(prev => (prev?.id === table.id ? null : table))
+          }
             >
               Table {table.id} - {table.status}
             </button>
