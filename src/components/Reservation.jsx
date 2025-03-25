@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { menu, allergies as commonAllergies } from "../Data";
+import "./Reservation.css";
 
 const Reservation = ({ table, updateTable, setSelectedTable }) => {
   const [people, setPeople] = useState(1);
   const [time, setTime] = useState("");
-// const [allergies, setAllergies] = useState(table.allergies);
-const [allergies, setAllergies] = useState(table.allergies || []);
+  const [allergies, setAllergies] = useState(table.allergies || []);
   const [preOrder, setPreOrder] = useState([]);
   const [orderingNow, setOrderingNow] = useState(false);
 
@@ -49,12 +49,11 @@ const [allergies, setAllergies] = useState(table.allergies || []);
           onChange={(e) => setTime(e.target.value)}
         />
       </label>
-      {/* <label>Allergies: <input type="text" value={allergies} onChange={e => setAllergies(e.target.value)} /></label> */}
    
-    <h5>Allergies</h5>
-<div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+  <h4 className="step">Allergies</h4>
+<div className="allergy-wrapper">
   {commonAllergies.map((item, index) => (
-    <label key={index}>
+    <label key={index} className="allergy-option">
       <input
         type="checkbox"
         value={item}
@@ -72,9 +71,11 @@ const [allergies, setAllergies] = useState(table.allergies || []);
     </label>
   ))}
 
-  <label>
+  <label className="allergy-option">
+    
     <input
       type="text"
+      className="allergy-input"
       placeholder="Other allergy"
       onBlur={(e) => {
         const value = e.target.value.trim();
@@ -83,11 +84,12 @@ const [allergies, setAllergies] = useState(table.allergies || []);
         }
       }}
     />
-    <span style={{ marginLeft: "8px" }}>(Press enter or click out to add)</span>
+    <span className="allergy-note">(Press enter or click out to add)</span>
   </label>
 </div>
 
-      <label>
+
+      {/* <label>
         <input
           type="checkbox"
           checked={orderingNow}
@@ -98,9 +100,9 @@ const [allergies, setAllergies] = useState(table.allergies || []);
 
       {!orderingNow && (
         <>
-          <h5>Pre-order Menu</h5>
+          <h4 className="step" >Pre-order Menu</h4>
           {menu.map((dish) => (
-            <button key={dish.id} onClick={() => handleDishSelect(dish)}>
+            <button className="button" key={dish.id} onClick={() => handleDishSelect(dish)}>
               {dish.name} - ${dish.price}
             </button>
           ))}
@@ -110,9 +112,34 @@ const [allergies, setAllergies] = useState(table.allergies || []);
             ))}
           </ul>
         </>
-      )}
+      )} */}
+      {!orderingNow && (
+  <>
+    <h4 className="step">Pre-order Menu</h4>
+    
+    <label className="order-now-toggle">
+      <input
+        type="checkbox"
+        checked={orderingNow}
+        onChange={() => setOrderingNow(!orderingNow)}
+      />
+      Order on the spot instead
+    </label>
 
-      <button onClick={handleSubmit}>Reserve</button>
+    {menu.map((dish) => (
+      <button className="button" key={dish.id} onClick={() => handleDishSelect(dish)}>
+        {dish.name} - ${dish.price}
+      </button>
+    ))}
+    <ul>
+      {preOrder.map((dish, index) => (
+        <li key={index}>{dish.name}</li>
+      ))}
+    </ul>
+  </>
+)}
+
+      <button className="button__main button" onClick={handleSubmit}>Reserve</button>
     </div>
   );
 };

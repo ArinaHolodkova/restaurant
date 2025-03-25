@@ -3,6 +3,7 @@ import { tables } from "../Data";
 import CurrentOrder from "./CurrentOrder";
 import Order from "./Order";
 import Reservation from "./Reservation";
+import Bingo from "./components/Bingo";
 
 const TableList = () => {
   const [tableData, setTableData] = useState(tables);
@@ -36,46 +37,46 @@ const TableList = () => {
 
   return (
     <div>
-      <h2>Restaurant Tables</h2>
-      <button onClick={() => setSwapMode(!swapMode)}>
+      <button className="swap" onClick={() => setSwapMode(!swapMode)}>
         {swapMode ? "Cancel Swap" : "Swap Tables"}
       </button>
-      <div className="table__container">
-        {tableData.map(table => (
-          <button
-            key={table.id}
-            className={`table ${table.status.toLowerCase()}`}
-            onClick={() => swapMode ? handleSwapRequest(table) : setSelectedTable(table)}
-          >
-            Table {table.id} - {table.status}
-          </button>
-        ))}
-      </div>
+ <div className="table__container">
+  {tableData.map((table) => (
+    <div key={table.id} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+      <button
+        className={`table ${table.status.toLowerCase()}`}
+        onClick={() => swapMode ? handleSwapRequest(table) : setSelectedTable(table)}
+      >
+        Table {table.id} - {table.status}
+      </button>
 
-      {selectedTable && !swapMode && (
-        <div>
-          <h3>Table {selectedTable.id}</h3>
+      {selectedTable?.id === table.id && !swapMode && (
+        <div style={{ marginTop: "1rem", textAlign: "center" }}>
+          <h3>Table {table.id}</h3>
           <button onClick={() => setViewingOrder("current")}>View Current Order</button>
           <button onClick={() => setViewingOrder("place")}>Place Order</button>
           <button onClick={() => setViewingOrder("reserve")}>Reserve</button>
 
-          {viewingOrder === "current" && <CurrentOrder table={selectedTable} />}
+          {viewingOrder === "current" && <CurrentOrder table={table} />}
           {viewingOrder === "place" && (
             <Order
-              table={selectedTable}
+              table={table}
               updateTable={updateTable}
               setSelectedTable={setSelectedTable}
             />
           )}
           {viewingOrder === "reserve" && (
             <Reservation
-              table={selectedTable}
+              table={table}
               updateTable={updateTable}
               setSelectedTable={setSelectedTable}
             />
           )}
         </div>
       )}
+    </div>
+  ))}
+</div>
     </div>
   );
 };
