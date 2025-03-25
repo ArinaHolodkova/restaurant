@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { menu, allergies } from "../Data";
+import { menu, allergies as commonAllergies } from "../Data";
 
 const Reservation = ({ table, updateTable, setSelectedTable }) => {
   const [people, setPeople] = useState(1);
   const [time, setTime] = useState("");
 // const [allergies, setAllergies] = useState(table.allergies);
+const [allergies, setAllergies] = useState(table.allergies || []);
   const [preOrder, setPreOrder] = useState([]);
   const [orderingNow, setOrderingNow] = useState(false);
 
@@ -52,7 +53,7 @@ const Reservation = ({ table, updateTable, setSelectedTable }) => {
    
     <h5>Allergies</h5>
 <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-  {allergies.map((item, index) => (
+  {commonAllergies.map((item, index) => (
     <label key={index}>
       <input
         type="checkbox"
