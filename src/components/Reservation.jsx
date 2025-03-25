@@ -13,19 +13,20 @@ const Reservation = ({ table, updateTable, setSelectedTable }) => {
     setPreOrder([...preOrder, dish]);
   };
 
-  const handleSubmit = () => {
-    const reservation = {
-      type: orderingNow ? "order-on-spot" : "pre-order",
-      people,
-      time,
-      preOrder,
-    };
-    updateTable(table.id, {
-      status: "Reserved",
-      reservation,
-    });
-    setSelectedTable(null);
+ const handleSubmit = () => {
+  const reservation = {
+    type: orderingNow ? "order-on-spot" : "pre-order",
+    people,
+    time,
+    allergies, 
+    preOrder,
   };
+  updateTable(table.id, {
+    status: "Reserved",
+    reservation,
+  });
+  setSelectedTable(null);
+};
 
   return (
     <div>
@@ -88,35 +89,10 @@ const Reservation = ({ table, updateTable, setSelectedTable }) => {
   </label>
 </div>
 
-
-      {/* <label>
-        <input
-          type="checkbox"
-          checked={orderingNow}
-          onChange={() => setOrderingNow(!orderingNow)}
-        />
-        Order on the spot
-      </label>
-
-      {!orderingNow && (
-        <>
-          <h4 className="step" >Pre-order Menu</h4>
-          {menu.map((dish) => (
-            <button className="button" key={dish.id} onClick={() => handleDishSelect(dish)}>
-              {dish.name} - ${dish.price}
-            </button>
-          ))}
-          <ul>
-            {preOrder.map((dish, index) => (
-              <li key={index}>{dish.name}</li>
-            ))}
-          </ul>
-        </>
-      )} */}
       {!orderingNow && (
   <>
     <h4 className="step">Pre-order Menu</h4>
-    
+
     <label className="order-now-toggle">
       <input
         type="checkbox"
