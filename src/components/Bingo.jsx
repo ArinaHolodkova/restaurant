@@ -24,17 +24,14 @@ const Bingo = () => {
   const checkBingo = (grid) => {
     const lines = [];
 
-    // Rows
     for (let i = 0; i < 5; i++) {
       lines.push(grid.slice(i * 5, i * 5 + 5));
     }
 
-    // Columns
     for (let i = 0; i < 5; i++) {
       lines.push([grid[i], grid[i + 5], grid[i + 10], grid[i + 15], grid[i + 20]]);
     }
 
-    // Diagonals
     lines.push([grid[0], grid[6], grid[12], grid[18], grid[24]]);
     lines.push([grid[4], grid[8], grid[12], grid[16], grid[20]]);
 
@@ -48,7 +45,7 @@ const Bingo = () => {
 
   return (
     <div className="bingo-wrapper">
-      <h2>Staff Bingo</h2>
+      <h2 className="bingo-title">Staff Bingo</h2>
       <div className="bingo-grid">
         {situations.map((situation, index) => (
           <div

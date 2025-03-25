@@ -3,12 +3,12 @@ import { tables } from "../Data";
 import CurrentOrder from "./CurrentOrder";
 import Order from "./Order";
 import Reservation from "./Reservation";
-import Bingo from "./components/Bingo";
+import Bingo from "./bingo";
 
 const TableList = () => {
   const [tableData, setTableData] = useState(tables);
   const [selectedTable, setSelectedTable] = useState(null);
-  const [viewingOrder, setViewingOrder] = useState(false);
+  const [viewingMode, setViewingMode] = useState(null); // 'order' | 'reservation' | 'current'
   const [swapMode, setSwapMode] = useState(false);
   const [swapFromTable, setSwapFromTable] = useState(null);
 
@@ -19,6 +19,16 @@ const TableList = () => {
       )
     );
   };
+
+ const cancelReservation = (id) => {
+  const table = tableData.find(t => t.id === id);
+  const keepStatus = table.status === "Taken" ? "Taken" : "Available";
+
+  updateTable(id, {
+    reservation: null,
+    status: keepStatus
+  });
+};
 
   const handleSwapRequest = (table) => {
     if (!swapFromTable) {
@@ -40,45 +50,70 @@ const TableList = () => {
       <button className="swap" onClick={() => setSwapMode(!swapMode)}>
         {swapMode ? "Cancel Swap" : "Swap Tables"}
       </button>
- <div className="table__container">
-  {tableData.map((table) => (
-    <div key={table.id} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-      <button
-        className={`table ${table.status.toLowerCase()}`}
-        onClick={() => swapMode ? handleSwapRequest(table) : setSelectedTable(table)}
-      >
-        Table {table.id} - {table.status}
-      </button>
 
-      {selectedTable?.id === table.id && !swapMode && (
-        <div style={{ marginTop: "1rem", textAlign: "center" }}>
-          <h3>Table {table.id}</h3>
-          <button onClick={() => setViewingOrder("current")}>View Current Order</button>
-          <button onClick={() => setViewingOrder("place")}>Place Order</button>
-          <button onClick={() => setViewingOrder("reserve")}>Reserve</button>
+      <div className="table__container">
+        {tableData.map((table) => (
+          <div key={table.id} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <button
+              className={`table ${table.status.toLowerCase()}`}
+              onClick={() =>
+                swapMode ? handleSwapRequest(table) : setSelectedTable(table)
+              }
+            >
+              Table {table.id} - {table.status}
+            </button>
 
-          {viewingOrder === "current" && <CurrentOrder table={table} />}
-          {viewingOrder === "place" && (
-            <Order
-              table={table}
-              updateTable={updateTable}
-              setSelectedTable={setSelectedTable}
-            />
-          )}
-          {viewingOrder === "reserve" && (
-            <Reservation
-              table={table}
-              updateTable={updateTable}
-              setSelectedTable={setSelectedTable}
-            />
-          )}
-        </div>
-      )}
-    </div>
-  ))}
-</div>
+            {selectedTable?.id === table.id && !swapMode && (
+              <div style={{ marginTop: "1rem", textAlign: "center" }}>
+                <h3>Table {table.id}</h3>
+                <button onClick={() => setViewingMode("current")}>View Current Order</button>
+                <button onClick={() => setViewingMode("order")}>Order</button>
+                <button onClick={() => setViewingMode("reservation")}>Reservation</button>
+
+                {/* Mode Logic */}
+                {viewingMode === "current" && <CurrentOrder table={table} />}
+
+                {viewingMode === "order" && (
+                  <Order
+                    table={table}
+                    updateTable={updateTable}
+                    setSelectedTable={setSelectedTable}
+                  />
+                )}
+
+                {viewingMode === "reservation" && (
+                  <>
+                    {table.reservation ? (
+                      <div>
+                        <h4>Reservation Details</h4>
+                        <p><strong>Time:</strong> {table.reservation.time}</p>
+                        <p><strong>People:</strong> {table.reservation.people}</p>
+                        {table.reservation.allergies?.length > 0 && (
+                          <p><strong>Allergies:</strong> {table.reservation.allergies.join(", ")}</p>
+                        )}
+                        <button onClick={() => cancelReservation(table.id)}>
+                          Cancel Reservation
+                        </button>
+                      </div>
+                    ) : (
+                      <Reservation
+                        table={table}
+                        updateTable={updateTable}
+                        setSelectedTable={setSelectedTable}
+                      />
+                    )}
+                  </>
+                )}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      <Bingo />
     </div>
   );
 };
 
 export default TableList;
+
