@@ -36,12 +36,15 @@ body {
 
 h1 {
   font-family: "Cormorant", serif;
+  text-align: center;
+  font-size: 3rem;
+  color: var(--color-blue);
 }
-h2 {
+/* h2 {
   font-family: "Oooh Baby", serif;
   font-size: 3rem;
   font-weight: 800;
-}
+} */
 
 .table__container {
   display: flex;
@@ -50,6 +53,7 @@ h2 {
   gap: 1rem;
   margin: 1rem;
   justify-content: space-around;
+ 
 }
 
 .table {
@@ -58,6 +62,7 @@ h2 {
   background-color: var(--background-color);
   border: 5px solid var(--color-blue);
   border-radius: 10%;
+  font-size: 1.6rem;
   color: black;
   cursor: pointer;
   transition: 0.3s;
@@ -76,4 +81,83 @@ h2 {
 
 .table:hover {
   transform: scale(1.05);
+}
+
+.swap{
+ font-family: "Cormorant", serif;
+ /* font-family: "Oooh Baby", serif; */
+ font-weight: bold;
+ background-color: var(--color-blue);
+ color: #eae2e4;
+ font-size: 1.5rem;
+border: none;
+border-radius: 10px;
+padding: 1rem;
+justify-self: center;
+margin:1rem;
+
+}
+.allergy-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  justify-content: center;
+}
+
+.allergy-option {
+  background-color: var(--color-lblue);
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.95rem;
+  color: black;
+}
+
+.allergy-option input[type="checkbox"] {
+  accent-color: var(--color-blue);
+  display: flex;
+  flex-direction: column;
+}
+
+.allergy-input {
+
+  border: 2px solid var(--color-blue);
+  border-radius: 8px;
+  padding: 0.5rem;
+  font-size: 1rem;
+  background-color: white;
+  color: black;
+}
+
+.allergy-note {
+  font-size: 0.8rem;
+  margin-left: 0.5rem;
+  color: #333;
+}
+ .step{
+  font-size: 2rem;
+  color: var(--color-blue);
+  font-family: "Cormorant", serif;
+ 
+
+ }
+ .button{
+border-radius: 10px;
+background-color: #b7c5da;
+color: black;
+padding: 1rem;
+margin: 1rem;
+border: none;
+font-size: 1rem;
+
+}
+.button__main{
+font-weight: 800;
+background-color: #1e5dac;
+color: #eae2e4;
+padding-left: 0.5rem;
+padding-right: 0.5rem;
 }
