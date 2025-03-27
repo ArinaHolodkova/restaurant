@@ -62,7 +62,7 @@ h1 {
   background-color: var(--background-color);
   border: 5px solid var(--color-blue);
   border-radius: 10%;
-  font-size: 1.6rem;
+  font-size: 1.2rem;
   color: black;
   cursor: pointer;
   transition: 0.3s;
@@ -85,11 +85,10 @@ h1 {
 
 .swap{
  font-family: "Cormorant", serif;
- /* font-family: "Oooh Baby", serif; */
  font-weight: bold;
  background-color: var(--color-blue);
  color: #eae2e4;
- font-size: 1.5rem;
+ font-size: 1.2rem;
 border: none;
 border-radius: 10px;
 padding: 1rem;
@@ -97,6 +96,8 @@ justify-self: center;
 margin:1rem;
 
 }
+
+
 .allergy-wrapper {
   display: flex;
   flex-wrap: wrap;
@@ -138,12 +139,19 @@ margin:1rem;
   color: #333;
 }
  .step{
-  font-size: 2rem;
+  font-size: 1.5rem;
   color: var(--color-blue);
-  font-family: "Cormorant", serif;
- 
+ text-align: center;
 
  }
+
+ h3{
+  text-align: center;
+  font-family: "Cormorant", serif;
+  color: var(--color-blue);
+  font-size: 2rem;
+ }
+
  .button{
 border-radius: 10px;
 background-color: #b7c5da;
@@ -160,4 +168,8 @@ background-color: #1e5dac;
 color: #eae2e4;
 padding-left: 0.5rem;
 padding-right: 0.5rem;
+}
+.inside__table{
+  justify-items: center;
+  margin-bottom: 1rem;
 }
