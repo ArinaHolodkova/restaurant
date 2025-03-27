@@ -81,11 +81,6 @@ useEffect(() => {
         {tableData.filter((table) => currentFilter === "All" || table.status === currentFilter).map((table) => (
           <div
             key={table.id}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
           >
             <button
             className={`table ${table.status.toLowerCase()}`}
@@ -99,11 +94,11 @@ useEffect(() => {
             </button>
 
             {selectedTable?.id === table.id && !swapMode && (
-              <div style={{ marginTop: "1rem", textAlign: "center" }}>
-                <h3>Table {table.id}</h3>
+              <div className="inside__table">
+                <h3 >Table {table.id}</h3>
 
                 {table.status === "Taken" && (
-                  <div style={{ marginBottom: "1rem" }}>
+                  <div>
                     <h4>Finish & Pay</h4>
                     <p>Select payment method:</p>
                     <button onClick={() => payTable(table.id)}>Card</button>
@@ -118,9 +113,9 @@ useEffect(() => {
                   </div>
                 )}
 
-                <button onClick={() => setViewingMode("current")}>View Current Order</button>
-                <button onClick={() => setViewingMode("order")}>Order</button>
-                <button onClick={() => setViewingMode("reservation")}>Reservation</button>
+                <button className="button"  onClick={() => setViewingMode("current")}>View Current Order</button>
+                <button className="button" onClick={() => setViewingMode("order")}>Order</button>
+                <button className="button" onClick={() => setViewingMode("reservation")}>Reservation</button>
 
               
                 {viewingMode === "current" && <CurrentOrder table={table} />}

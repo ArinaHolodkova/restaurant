@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { menu, allergies as commonAllergies } from "../Data";
-
+import "./Order.css"
 const OrderManagement = ({ table, updateTable, setSelectedTable }) => {
   const [order, setOrder] = useState(table.orders);
   const [allergies, setAllergies] = useState(table.allergies || []);
@@ -23,7 +23,7 @@ const OrderManagement = ({ table, updateTable, setSelectedTable }) => {
 
   return (
     <div>
-      <h4>Place Order</h4>
+      <h4 className="order">Place Order</h4>
 
   <h4 className="step">Allergies</h4>
 <div className="allergy-wrapper">
@@ -63,8 +63,6 @@ const OrderManagement = ({ table, updateTable, setSelectedTable }) => {
   </label>
 </div>
 
-    
-      <p>Total Bill: ${totalBill.toFixed(2)}</p>
       <h4 className="step">Menu</h4>
       <div>
         {menu.map(dish => (
@@ -73,7 +71,10 @@ const OrderManagement = ({ table, updateTable, setSelectedTable }) => {
           </button>
         ))}
       </div>
-      <button className="button__main button"  onClick={saveChanges}>Save</button>
+<div className="order__submit">
+<p className="order__bill">Total Bill: ${totalBill.toFixed(2)}</p>
+      <button className="order__save"  onClick={saveChanges}>Save</button>
+      </div>
     </div>
   );
 };

@@ -1,0 +1,35 @@
+
+.order{
+    text-align: center;
+    font-size: 1.7rem;
+    color: #1e5dac;
+}
+.order__submit{
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 90% 10%;
+        background-color:#1e5dac;
+
+
+}
+.order__bill{
+grid-row: 1;
+grid-column: 1;
+font-size: 1.2rem;
+    background-color:#1e5dac;
+    color: #eae2e4;
+    align-self: center;
+    justify-self: center;
+}
+.order__save{
+    grid-row: 1;
+    grid-column: 2;
+    border-radius: 10px;
+background-color: #b7c5da;
+color: #1e5dac;
+padding: 1rem;
+margin: 1rem;
+border: none;
+font-size: 1.2rem;
+font-weight: 600;
+}
