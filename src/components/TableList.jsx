@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { tables } from "../Data";
 import CurrentOrder from "./CurrentOrder";
 import Order from "./Order";
 import Reservation from "./Reservation";
 import Bingo from "./bingo";
 import Filter from "./Filter";
-import { useEffect } from "react";
 
 const TableList = () => {
   const [tableData, setTableData] = useState(tables);
@@ -15,42 +14,41 @@ const TableList = () => {
   const [swapFromTable, setSwapFromTable] = useState(null);
   const [currentFilter, setCurrentFilter] = useState("All");
 
-const updateTable = (id, updates) => {
-  const updatedTables = tableData.map(table =>
-    table.id === id ? { ...table, ...updates } : table
-  );
+  const updateTable = (id, updates) => {
+    const updatedTables = tableData.map((table) =>
+      table.id === id ? { ...table, ...updates } : table
+    );
+    setTableData(updatedTables);
+    localStorage.setItem("tableData", JSON.stringify(updatedTables));
+  };
 
-  setTableData(updatedTables);
-  localStorage.setItem("tableData", JSON.stringify(updatedTables));
-}
-
-useEffect(() => {
-  const saved = localStorage.getItem("tableData");
-  if (saved) {
-    setTableData(JSON.parse(saved));
-  }
-}, []);
+  useEffect(() => {
+    const saved = localStorage.getItem("tableData");
+    if (saved) {
+      setTableData(JSON.parse(saved));
+    }
+  }, []);
 
   const cancelReservation = (id) => {
-    const table = tableData.find(t => t.id === id);
+    const table = tableData.find((t) => t.id === id);
     const keepStatus = table.status === "Taken" ? "Taken" : "Available";
 
     updateTable(id, {
       reservation: null,
-      status: keepStatus
+      status: keepStatus,
     });
   };
 
   const payTable = (id) => {
     updateTable(id, {
-      status: "Dirty"
+      status: "Dirty",
     });
   };
 
   const cleanTable = (id) => {
     updateTable(id, {
       status: "Available",
-      currentOrder: null
+      currentOrder: null,
     });
   };
 
@@ -58,7 +56,7 @@ useEffect(() => {
     if (!swapFromTable) {
       setSwapFromTable(table);
     } else {
-      const updatedTables = tableData.map(t => {
+      const updatedTables = tableData.map((t) => {
         if (t.id === swapFromTable.id) return { ...t, id: table.id };
         if (t.id === table.id) return { ...t, id: swapFromTable.id };
         return t;
@@ -75,101 +73,165 @@ useEffect(() => {
         {swapMode ? "Cancel Swap" : "Swap Tables"}
       </button>
 
-     <Filter currentFilter={currentFilter} setCurrentFilter={setCurrentFilter} />
+      <Filter currentFilter={currentFilter} setCurrentFilter={setCurrentFilter} />
 
       <div className="table__container">
-        {tableData.filter((table) => currentFilter === "All" || table.status === currentFilter).map((table) => (
-          <div
-            key={table.id}
-          >
-            <button
-            className={`table ${table.status.toLowerCase()}`}
-            onClick={() =>
-            swapMode
-              ? handleSwapRequest(table)
-              : setSelectedTable(prev => (prev?.id === table.id ? null : table))
-          }
-            >
-              Table {table.id} - {table.status}
-            </button>
+        {tableData
+          .filter((table) =>
+            selectedTable && !swapMode
+              ? selectedTable.id === table.id
+              : currentFilter === "All" || table.status === currentFilter
+          )
+          .map((table) => (
+            <div key={table.id}>
+              <button
+                className={`table ${table.status.toLowerCase()}`}
+                onClick={() =>
+                  swapMode
+                    ? handleSwapRequest(table)
+                    : setSelectedTable((prev) =>
+                        prev?.id === table.id ? null : table
+                      )
+                }
+              >
+                Table {table.id} - {table.status}
+              </button>
 
-            {selectedTable?.id === table.id && !swapMode && (
-              <div className="inside__table">
-                <h3 >Table {table.id}</h3>
+              {selectedTable?.id === table.id && !swapMode && (
+                <div className="inside__table">
+                  <h3>Table {table.id}</h3>
 
-                {table.status === "Taken" && (
-                  <div>
-                    <h4>Finish & Pay</h4>
-                    <p>Select payment method:</p>
-                    <button onClick={() => payTable(table.id)}>Card</button>
-                    <button onClick={() => payTable(table.id)}>Cash</button>
-                  </div>
-                )}
+    
+                  {table.status !== "Dirty" && (
+                    <>
+                      {(table.status === "Available" || table.status === "Reserved") && (
+                        <>
+                          <button
+                            className={`button ${viewingMode === "current" ? "button__active" : ""}`}
+                            onClick={() => setViewingMode("current")}
+                          >
+                            View Current Order
+                          </button>
+                          <button
+                            className={`button ${viewingMode === "order" ? "button__active" : ""}`}
+                            onClick={() => setViewingMode("order")}
+                          >
+                            Order
+                          </button>
+                          <button
+                            className={`button ${viewingMode === "reservation" ? "button__active" : ""}`}
+                            onClick={() => setViewingMode("reservation")}
+                          >
+                            Reservation
+                          </button>
+                        </>
+                      )}
 
-                {table.status === "Dirty" && (
-                  <div style={{ marginBottom: "1rem" }}>
-                    <h4>This table needs cleaning.</h4>
-                    <button onClick={() => cleanTable(table.id)}>Clean Table</button>
-                  </div>
-                )}
+                      {table.status === "Taken" && (
+                        <>
+                          <button
+                            className={`button ${viewingMode === "current" ? "button__active" : ""}`}
+                            onClick={() => setViewingMode("current")}
+                          >
+                            View Current Order
+                          </button>
+                          <button
+                            className={`button ${viewingMode === "reservation" ? "button__active" : ""}`}
+                            onClick={() => setViewingMode("reservation")}
+                          >
+                            Reservation
+                          </button>
+                        </>
+                      )}
+                    </>
+                  )}
 
-                <button className="button"  onClick={() => setViewingMode("current")}>View Current Order</button>
-                <button className="button" onClick={() => setViewingMode("order")}>Order</button>
-                <button className="button" onClick={() => setViewingMode("reservation")}>Reservation</button>
+          
+                  {table.status !== "Dirty" && (
+                    <>
+                      {viewingMode === "current" && <CurrentOrder table={table} />}
+                      {viewingMode === "order" && (
+                        <Order
+                          table={table}
+                          updateTable={updateTable}
+                          setSelectedTable={setSelectedTable}
+                        />
+                      )}
+                      {viewingMode === "reservation" && (
+                        <>
+                          {table.reservation ? (
+                            <div>
+                              <h4>Reservation Details</h4>
+                              <p>
+                                <strong>Time:</strong> {table.reservation.time}
+                              </p>
+                              <p>
+                                <strong>People:</strong> {table.reservation.people}
+                              </p>
 
-              
-                {viewingMode === "current" && <CurrentOrder table={table} />}
+                              {table.reservation.allergies?.length > 0 && (
+                                <p>
+                                  <strong>Allergies:</strong>{" "}
+                                  {table.reservation.allergies.join(", ")}
+                                </p>
+                              )}
 
-                {viewingMode === "order" && (
-                  <Order
-                    table={table}
-                    updateTable={updateTable}
-                    setSelectedTable={setSelectedTable}
-                  />
-                )}
+                              {table.reservation.preOrder?.length > 0 && (
+                                <>
+                                  <p>
+                                    <strong>Pre-Ordered Dishes:</strong>
+                                  </p>
+                                  <ul style={{ padding: 0, listStyleType: "none" }}>
+                                    {table.reservation.preOrder.map((dish, index) => (
+                                      <li key={index}>• {dish.name}</li>
+                                    ))}
+                                  </ul>
+                                </>
+                              )}
 
-                {viewingMode === "reservation" && (
-                  <>
-                    {table.reservation ? (
-                      <div>
-                        <h4>Reservation Details</h4>
-                        <p><strong>Time:</strong> {table.reservation.time}</p>
-                        <p><strong>People:</strong> {table.reservation.people}</p>
+                              <button onClick={() => cancelReservation(table.id)}>
+                                Cancel Reservation
+                              </button>
+                            </div>
+                          ) : (
+                            <Reservation
+                              table={table}
+                              updateTable={updateTable}
+                              setSelectedTable={setSelectedTable}
+                            />
+                          )}
+                        </>
+                      )}
+                    </>
+                  )}
 
-                        {table.reservation.allergies?.length > 0 && (
-                          <p>
-                            <strong>Allergies:</strong> {table.reservation.allergies.join(", ")}
-                          </p>
-                        )}
+  
+                  {table.status === "Taken" && (
+                    <div className="pay">
+                      <h4 className="pay__title">Finish & Pay</h4>
+                      <p className="pay__select">Select payment method:</p>
+                      <button className="pay__button" onClick={() => payTable(table.id)}>
+                        Card
+                      </button>
+                      <button className="pay__button" onClick={() => payTable(table.id)}>
+                        Cash
+                      </button>
+                    </div>
+                  )}
 
-                        {table.reservation.preOrder?.length > 0 && (
-                          <>
-                            <p><strong>Pre-Ordered Dishes:</strong></p>
-                            <ul style={{ padding: 0, listStyleType: "none" }}>
-                              {table.reservation.preOrder.map((dish, index) => (
-                                <li key={index}>• {dish.name}</li>
-                              ))}
-                            </ul>
-                          </>
-                        )}
-
-                        <button onClick={() => cancelReservation(table.id)}>
-                          Cancel Reservation
-                        </button>
-                      </div>
-                    ) : (
-                      <Reservation
-                        table={table}
-                        updateTable={updateTable}
-                        setSelectedTable={setSelectedTable}
-                      />
-                    )}
-                  </>
-                )}
-              </div>
-            )}
-          </div>
-        ))}
+                
+                  {table.status === "Dirty" && (
+                    <div style={{ marginBottom: "1rem" }}>
+                      <h4>This table needs cleaning.</h4>
+                      <button className="button" onClick={() => cleanTable(table.id)}>
+                        Clean Table
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          ))}
       </div>
 
       <Bingo />

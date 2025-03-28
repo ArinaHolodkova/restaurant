@@ -64,7 +64,7 @@ const OrderManagement = ({ table, updateTable, setSelectedTable }) => {
 </div>
 
       <h4 className="step">Menu</h4>
-      <div>
+      <div className="menu">
         {menu.map(dish => (
           <button className="button" key={dish.id} onClick={() => handleOrderChange(dish)}>
             {dish.name} - ${dish.price}
