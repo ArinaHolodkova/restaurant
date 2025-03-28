@@ -3,7 +3,7 @@ import { tables } from "../Data";
 import CurrentOrder from "./CurrentOrder";
 import Order from "./Order";
 import Reservation from "./Reservation";
-import Bingo from "./bingo";
+import Bingo from "./Bingo";
 import Filter from "./Filter";
 
 const TableList = () => {
