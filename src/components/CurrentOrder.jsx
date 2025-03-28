@@ -1,19 +1,22 @@
 import React from "react";
+import "./CurrentOrder.css";
 
 const CurrentOrder = ({ table }) => {
   return (
-    <div>
-      <h4>Current Order</h4>
-      <ul>
+    <div className="order__container">
+      <h4 className="order__title">Current Order</h4>
+      <ul className="order__list">
         {table.orders.length > 0 ? (
           table.orders.map((dish, index) => (
-            <li key={index}>{dish.name} - ${dish.price}</li>
+            <li key={index} className="order__item">
+              {dish.name} - ${dish.price}
+            </li>
           ))
         ) : (
-          <p>No orders yet.</p>
+          <p className="order__empty">No orders yet.</p>
         )}
       </ul>
-      <p>Total Bill: ${table.totalBill.toFixed(2)}</p>
+      <p className="order__total">Total Bill: ${table.totalBill.toFixed(2)}</p>
     </div>
   );
 };

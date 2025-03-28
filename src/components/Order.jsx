@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { menu, allergies as commonAllergies } from "../Data";
 import "./Order.css"
-const OrderManagement = ({ table, updateTable, setSelectedTable }) => {
+const OrderManagement = ({ table, updateTable, setSelectedTable, setViewingMode }) => {
   const [order, setOrder] = useState(table.orders);
   const [allergies, setAllergies] = useState(table.allergies || []);
   const [totalBill, setTotalBill] = useState(table.totalBill);
+
 
   const handleOrderChange = (dish) => {
     const updatedOrder = [...order, dish];
@@ -13,13 +14,16 @@ const OrderManagement = ({ table, updateTable, setSelectedTable }) => {
     setTotalBill(updatedBill);
   };
 
-  const saveChanges = () => {
-    updateTable(table.id, { orders: order, allergies, totalBill });
-    setSelectedTable(null);
-     updateTable(table.id, {
-      status: "Taken",
+const saveChanges = () => {
+    updateTable(table.id, {
+      orders: order,
+      allergies,
+      totalBill,
+      isTaken: true,
     });
-  };
+  setSelectedTable({ ...table, orders: order, totalBill, allergies, status: "Taken" });
+  setViewingMode(null); 
+};
 
   return (
     <div>
@@ -66,7 +70,7 @@ const OrderManagement = ({ table, updateTable, setSelectedTable }) => {
       <h4 className="step">Menu</h4>
       <div className="menu">
         {menu.map(dish => (
-          <button className="button" key={dish.id} onClick={() => handleOrderChange(dish)}>
+          <button className="button menu__button" key={dish.id} onClick={() => handleOrderChange(dish)}>
             {dish.name} - ${dish.price}
           </button>
         ))}

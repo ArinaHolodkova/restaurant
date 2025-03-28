@@ -22,8 +22,8 @@ const Reservation = ({ table, updateTable, setSelectedTable }) => {
       preOrder,
     };
     updateTable(table.id, {
-      status: "Reserved",
       reservation,
+      isReserved: true,
     });
     setSelectedTable(null);
   };
@@ -99,7 +99,7 @@ const Reservation = ({ table, updateTable, setSelectedTable }) => {
           <div className="menu">
             {menu.map((dish) => (
               <button
-                className="reservation__button"
+                className="reservation__button menu__button"
                 key={dish.id}
                 onClick={() => handleDishSelect(dish)}
               >
@@ -125,7 +125,7 @@ const Reservation = ({ table, updateTable, setSelectedTable }) => {
             />
             Order on the spot instead
           </label>
-          
+
         <button className="reservation__submit" onClick={handleSubmit}>
           Reserve
         </button>
