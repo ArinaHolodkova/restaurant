@@ -59,7 +59,7 @@ const Bingo = () => {
       </div>
       {hasWon && (
         <div className="bingo-reward">
-          🎉 BINGO! You win an 🍦 ice cream!
+         <p> 🎉 BINGO! You win an ice cream! Ask manager about it </p>
         </div>
       )}
     </div>

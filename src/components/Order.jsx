@@ -75,9 +75,9 @@ const saveChanges = () => {
           </button>
         ))}
       </div>
-<div className="order__submit">
-<p className="order__bill">Total Bill: ${totalBill.toFixed(2)}</p>
-      <button className="order__save"  onClick={saveChanges}>Save</button>
+    <div className="order__submit">
+    <p className="order__bill">Total Bill: ${totalBill.toFixed(2)}</p>
+          <button className="order__save"  onClick={saveChanges}>Save</button>
       </div>
     </div>
   );
