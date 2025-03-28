@@ -1,0 +1,34 @@
+.order__container {
+  background-color: #b7c5da;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  text-align: center;
+}
+
+.order__title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--color-blue);
+}
+
+.order__list {
+  list-style: none;
+  margin-bottom: 1rem;
+}
+
+.order__item {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+
+}
+
+.order__empty {
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+.order__total {
+  font-weight: bold;
+  color: var(--color-blue);
+}

@@ -75,14 +75,15 @@ h1 {
 
 .table.reserved {
   background-color: var(--color-blue);
-  color: white;
+  color: #eae2e4;
   border: none;
 }
 
-.table.dirty{
-  background-color: 30, 93, 172, 0.7;
-  opacity: 50%;
+.table.dirty {
+  background-color: rgba(30, 93, 172, 0.6);
+  border: none;
 }
+
 .table:hover {
   transform: scale(1.05);
 }
@@ -214,4 +215,9 @@ font-size: 1.5rem;
 border: none;
 border-radius: 10px;
 margin-bottom: 1rem;
+}
+
+.menu__button:active{
+  background-color: var(--color-blue);
+color: #eae2e4;
 }

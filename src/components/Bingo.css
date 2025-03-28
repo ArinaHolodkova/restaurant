@@ -34,9 +34,9 @@
 }
 
 .bingo-cell.scratched {
-  background-color: #ccc;
+  background-color:#eae2e4;
   text-decoration: line-through;
-  color: #555;
+  color:  #b7c5da;
   cursor: default;
 }
 
