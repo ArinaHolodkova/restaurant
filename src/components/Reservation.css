@@ -63,18 +63,6 @@
   margin-top: 2rem;
 }
 
-.reservation__toggle {
-  margin-bottom: 1rem;
-  font-size: 0.9rem;
-}
-
-.reservation__menu {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.6rem;
-  margin-bottom: 1rem;
-}
 
 .reservation__button {
   background-color: #b7c5da;
@@ -100,9 +88,25 @@
   background-color: #1e5dac;
   padding: 1rem;
   margin-top: 2rem;
+  display: grid;
+  grid-template-columns: 90% 10%;
+  
+}
+
+.reservation__toggle {
+  grid-column: 1;
+  font-size: 1.5rem;
+  color: #eae2e4;
+  font-weight: 600;
+}
+.reservation__toggle input[type="checkbox"] {
+  transform: scale(1.5);
+  margin-right: 0.5rem;
 }
 
 .reservation__submit {
+  grid-column: 2;
+  justify-self: end;
   background-color: #b7c5da;
   color: #1e5dac;
   font-weight: bold;

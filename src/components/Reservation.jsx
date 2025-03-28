@@ -96,16 +96,7 @@ const Reservation = ({ table, updateTable, setSelectedTable }) => {
         <div className="reservation__preorder">
           <h4 className="reservation__subheading">Pre-order Menu</h4>
 
-          <label className="reservation__toggle">
-            <input
-              type="checkbox"
-              checked={orderingNow}
-              onChange={() => setOrderingNow(!orderingNow)}
-            />
-            Order on the spot instead
-          </label>
-
-          <div className="reservation__menu">
+          <div className="menu">
             {menu.map((dish) => (
               <button
                 className="reservation__button"
@@ -126,6 +117,15 @@ const Reservation = ({ table, updateTable, setSelectedTable }) => {
       )}
 
       <div className="reservation__footer">
+                  <label className="reservation__toggle">
+            <input
+              type="checkbox"
+              checked={orderingNow}
+              onChange={() => setOrderingNow(!orderingNow)}
+            />
+            Order on the spot instead
+          </label>
+          
         <button className="reservation__submit" onClick={handleSubmit}>
           Reserve
         </button>

@@ -40,6 +40,7 @@ h1 {
   font-size: 3rem;
   color: var(--color-blue);
 }
+
 /* h2 {
   font-family: "Oooh Baby", serif;
   font-size: 3rem;
@@ -53,7 +54,6 @@ h1 {
   gap: 1rem;
   margin: 1rem;
   justify-content: space-around;
- 
 }
 
 .table {
@@ -79,24 +79,26 @@ h1 {
   border: none;
 }
 
+.table.dirty{
+  background-color: 30, 93, 172, 0.7;
+  opacity: 50%;
+}
 .table:hover {
   transform: scale(1.05);
 }
 
-.swap{
- font-family: "Cormorant", serif;
- font-weight: bold;
- background-color: var(--color-blue);
- color: #eae2e4;
- font-size: 1.2rem;
-border: none;
-border-radius: 10px;
-padding: 1rem;
-justify-self: center;
-margin:1rem;
-
+.swap {
+  font-family: "Cormorant", serif;
+  font-weight: bold;
+  background-color: var(--color-blue);
+  color: #eae2e4;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 10px;
+  padding: 1rem;
+  justify-self: center;
+  margin: 1rem;
 }
-
 
 .allergy-wrapper {
   display: flex;
@@ -124,7 +126,6 @@ margin:1rem;
 }
 
 .allergy-input {
-
   border: 2px solid var(--color-blue);
   border-radius: 8px;
   padding: 0.5rem;
@@ -138,38 +139,79 @@ margin:1rem;
   margin-left: 0.5rem;
   color: #333;
 }
- .step{
+
+.step {
   font-size: 1.5rem;
   color: var(--color-blue);
- text-align: center;
+  text-align: center;
+}
 
- }
-
- h3{
+h3 {
   text-align: center;
   font-family: "Cormorant", serif;
   color: var(--color-blue);
   font-size: 2rem;
- }
-
- .button{
-border-radius: 10px;
-background-color: #b7c5da;
-color: black;
-padding: 1rem;
-margin: 1rem;
-border: none;
-font-size: 1rem;
-
 }
-.button__main{
-font-weight: 800;
-background-color: #1e5dac;
-color: #eae2e4;
-padding-left: 0.5rem;
-padding-right: 0.5rem;
+
+.button {
+  border-radius: 10px;
+  background-color: #b7c5da;
+  color: black;
+  padding: 1rem;
+  margin: 1rem;
+  border: none;
+  font-size: 1rem;
 }
-.inside__table{
+
+.button__main {
+  font-weight: 800;
+  background-color: #1e5dac;
+  color: #eae2e4;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.inside__table {
   justify-items: center;
   margin-bottom: 1rem;
+}
+.menu {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.button__options:hover {
+  background-color: #a7b7cc;
+  color: #eae2e4;
+}
+.button__active {
+  background-color: var(--color-blue);
+  color: white;
+}
+
+.pay{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.pay__title{
+  color: #1e5dac;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+}
+.pay__select{
+    font-weight: 600;
+}
+.pay__button{
+background-color: #1e5dac;
+color: #eae2e4;
+padding: 1rem;
+font-size: 1.5rem;
+border: none;
+border-radius: 10px;
+margin-bottom: 1rem;
 }
